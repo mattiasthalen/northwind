@@ -1,0 +1,26 @@
+- name: category
+  type: core
+
+- name: customer
+  type: core
+
+- name: employee
+  type: core
+
+- name: order
+  type: core
+
+- name: product
+  type: core
+
+- name: region
+  type: core
+
+- name: shipper
+  type: core
+
+- name: supplier
+  type: core
+
+- name: territory
+  type: core

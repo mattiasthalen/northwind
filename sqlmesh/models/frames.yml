@@ -1,0 +1,233 @@
+- name: northwind__categories
+  hooks:
+  - name: _hook__category__id
+    primary: true
+    concept: category
+    qualifier: id
+    keyset: northwind.category.id
+    expression: category_id
+
+  - name: _hook__category__name
+    primary: false
+    concept: category
+    qualifier: name
+    keyset: northwind.category.name
+    expression: category_name
+
+- name: northwind__category_details
+  hooks:
+  - name: _hook__category__detail
+    primary: true
+    concept: category
+    qualifier: id
+    keyset: northwind.category.id
+    expression: category_id
+
+- name: northwind__customers
+  hooks:
+  - name: _hook__customer__id
+    primary: true
+    concept: customer
+    qualifier: id
+    keyset: northwind.customer.id
+    expression: customer_id
+
+  - name: _hook__customer__name
+    primary: false
+    concept: customer
+    qualifier: name
+    keyset: northwind.customer.name
+    expression: company_name
+
+- name: northwind__employees
+  hooks:
+  - name: _hook__employee__id
+    primary: true
+    concept: employee
+    qualifier: id
+    keyset: northwind.employee.id
+    expression: employee_id
+
+- name: northwind__employee_territories
+  hooks:
+  - name: _hook__employee__id
+    primary: false
+    concept: employee
+    qualifier: id
+    keyset: northwind.employee.id
+    expression: _get_northwindapiv_1_employees_employee_id
+
+  - name: _hook__territory__id
+    primary: false
+    concept: territory
+    qualifier: id
+    keyset: northwind.territory.id
+    expression: territory_id
+    
+  composite_hooks:
+  - name: _hook__employee__territory
+    primary: true
+    hooks:
+    - _hook__employee__id
+    - _hook__territory__id
+
+- name: northwind__orders
+  hooks:
+  - name: _hook__order__id
+    primary: true
+    concept: order
+    qualifier: id
+    keyset: northwind.order.id
+    expression: order_id
+
+  - name: _hook__customer__id
+    primary: false
+    concept: customer
+    qualifier: id
+    keyset: northwind.customer.id
+    expression: customer_id
+
+  - name: _hook__employee__id
+    primary: false
+    concept: employee
+    qualifier: id
+    keyset: northwind.employee.id
+    expression: employee_id
+
+  - name: _hook__shipper__id
+    primary: false
+    concept: shipper
+    qualifier: id
+    keyset: northwind.shipper.id
+    expression: ship_via
+
+- name: northwind__order_details
+  hooks:
+  - name: _hook__order__id
+    primary: false
+    concept: order
+    qualifier: id
+    keyset: northwind.order.id
+    expression: order_id
+
+  - name: _hook__product__id
+    primary: false
+    concept: product
+    qualifier: id
+    keyset: northwind.product.id
+    expression: product_id
+
+  composite_hooks:
+  - name: _hook__order__product
+    primary: true
+    hooks:
+    - _hook__order__id
+    - _hook__product__id
+
+- name: northwind__products
+  hooks:
+  - name: _hook__product__id
+    primary: true
+    concept: product
+    qualifier: id
+    keyset: northwind.product.id
+    expression: product_id
+
+  - name: _hook__product__name
+    primary: false
+    concept: product
+    qualifier: name
+    keyset: northwind.product.name
+    expression: product_name
+
+  - name: _hook__supplier__id
+    primary: false
+    concept: supplier
+    qualifier: id
+    keyset: northwind.supplier.id
+    expression: supplier_id
+
+  - name: _hook__category__id
+    primary: false
+    concept: category
+    qualifier: id
+    keyset: northwind.category.id
+    expression: category_id
+
+  - name: _hook__category__detail
+    primary: false
+    concept: category
+    qualifier: id
+    keyset: northwind.category.id
+    expression: category_id
+
+- name: northwind__regions
+  hooks:
+  - name: _hook__region__id
+    primary: true
+    concept: region
+    qualifier: id
+    keyset: northwind.region.id
+    expression: region_id
+
+  - name: _hook__region__name
+    primary: false
+    concept: region
+    qualifier: name
+    keyset: northwind.region.name
+    expression: region_description
+
+- name: northwind__shippers
+  hooks:
+  - name: _hook__shipper__id
+    primary: true
+    concept: shipper
+    qualifier: id
+    keyset: northwind.shipper.id
+    expression: shipper_id
+
+  - name: _hook__shipper__name
+    primary: false
+    concept: shipper
+    qualifier: name
+    keyset: northwind.shipper.name
+    expression: company_name
+
+- name: northwind__suppliers
+  hooks:
+  - name: _hook__supplier__id
+    primary: true
+    concept: supplier
+    qualifier: id
+    keyset: northwind.supplier.id
+    expression: supplier_id
+
+  - name: _hook__supplier__name
+    primary: false
+    concept: supplier
+    qualifier: name
+    keyset: northwind.supplier.name
+    expression: company_name
+
+- name: northwind__territories
+  hooks:
+  - name: _hook__territory__id
+    primary: true
+    concept: territory
+    qualifier: id
+    keyset: northwind.territory.id
+    expression: territory_id
+
+  - name: _hook__territory__name
+    primary: false
+    concept: territory
+    qualifier: name
+    keyset: northwind.territory.name
+    expression: territory_description
+
+  - name: _hook__region__id
+    primary: false
+    concept: region
+    qualifier: id
+    keyset: northwind.region.id
+    expression: region_id
