@@ -6,6 +6,7 @@ requires-python = ">=3.11,<3.12"
 dependencies = [
     "dlt[az,deltalake,filesystem,parquet]>=1.12.1",
     "enlighten>=1.14.1",
+    "ibis>=3.3.0",
     "networkx>=3.5",
     "sqlmesh[fabric,mssql,lsp]",
 ]
