@@ -1,0 +1,14 @@
+[project]
+name = "northwind-to-fabric"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "dlt[az,deltalake,filesystem,parquet]>=1.12.1",
+    "enlighten>=1.14.1",
+    "networkx>=3.5",
+    "sqlmesh[fabric,mssql,lsp]",
+]
+
+[tool.uv.sources]
+sqlmesh = { git = "https://github.com/TobikoData/sqlmesh.git", rev = "main" }
