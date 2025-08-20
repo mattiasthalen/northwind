@@ -20,8 +20,12 @@ def load_northwind(env) -> None:
     dataset_name = "northwind"
 
     if dev_mode:
-        branch_name = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).strip().decode('utf-8')
-        dataset_name = f"{dataset_name}_{branch_name.replace('-', '_')}"
+        try:
+            branch_name = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).strip().decode('utf-8')
+        except:
+            branch_name = "dev"
+        finally:
+            dataset_name = f"{dataset_name}_{branch_name.replace('-', '_')}"
 
     schema_path = "./dlt/schemas"
     export_schema_path = os.path.join(schema_path, "export")
