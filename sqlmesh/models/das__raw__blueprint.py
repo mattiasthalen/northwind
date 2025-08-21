@@ -13,7 +13,7 @@ def _normalize_schemas(schemas: str | list[str]) -> list[str]:
     return [schemas] if isinstance(schemas, str) else schemas
 
 def _schema_path(script_dir: str, schema: str) -> str:
-    rel_path = f"../../dlt/schemas/export/{schema}.schema.yaml"
+    rel_path = f"../../dlt/schemas/prod/export/{schema}.schema.yaml"
     return os.path.normpath(os.path.join(script_dir, rel_path))
 
 def _load_schema_dict(schema_path: str) -> dict:
