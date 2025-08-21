@@ -120,6 +120,8 @@ humanize==4.12.3
     # via dlt
 hyperscript==0.3.0
     # via sqlmesh
+ibis==3.3.0
+    # via northwind-to-fabric (pyproject.toml)
 idna==3.10
     # via
     #   anyio
@@ -305,7 +307,7 @@ sqlglot==27.8.0
     #   sqlmesh
 sqlglotrs==0.6.1
     # via sqlglot
-sqlmesh @ git+https://github.com/TobikoData/sqlmesh.git@31763bf76bf243af4c45925a9b575abec6cb6b97
+sqlmesh==0.210.0
     # via northwind-to-fabric (pyproject.toml)
 sse-starlette==3.0.2
     # via sqlmesh
