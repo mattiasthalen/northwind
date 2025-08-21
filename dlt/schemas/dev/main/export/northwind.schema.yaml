@@ -1,5 +1,5 @@
-version: 1
-version_hash: NUuBKFhaD4pckhDbSj38elM4fPFlZB3lRvrI0X/gYws=
+version: 3
+version_hash: eLOW9trhEwTCvEefFSHsr7oMT754rgMmtlkrc3HUps4=
 engine_version: 11
 name: northwind
 tables:
@@ -47,66 +47,31 @@ tables:
     write_disposition: skip
     resource: _dlt_loads
     description: Created by DLT. Tracks completed loads
-  raw__northwind__customers:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_customers
-  raw__northwind__products:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_products
-  raw__northwind__regions:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_regions
-  raw__northwind__shippers:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_shippers
-  raw__northwind__suppliers:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_suppliers
-  raw__northwind__territories:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_territories
-  raw__northwind__category_details:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_categoriesid_details
-  raw__northwind__employee_territories:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_employee_territories
-  raw__northwind__order_details:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_ordersid_order_details
-  raw__northwind__orders:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_orders
-  raw__northwind__employees:
-    columns: {}
-    write_disposition: append
-    table_format: delta
-    resource: get_northwindapiv_1_employees
   raw__northwind__categories:
-    columns: {}
-    write_disposition: append
-    table_format: delta
+    columns:
+      category_id:
+        data_type: bigint
+        nullable: true
+      category_name:
+        data_type: text
+        nullable: true
+      description:
+        data_type: text
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    write_disposition: replace
+    file_format: parquet
     resource: get_northwindapiv_1_categories
+    x-normalizer:
+      max_nesting: 0
+      seen-data: true
   _dlt_pipeline_state:
     columns:
       version:
@@ -131,9 +96,16 @@ tables:
         data_type: text
         nullable: false
         precision: 64
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
     write_disposition: append
     file_format: preferred
     resource: _dlt_pipeline_state
+    x-normalizer:
+      seen-data: true
 settings:
   detections:
   - iso_timestamp
@@ -157,4 +129,6 @@ normalizers:
   json:
     module: dlt.common.normalizers.json.relational
 previous_hashes:
-- Eojj/oPKNRc0LSCjaBx14nYtRErp1Q1YXCesyJavivk=
+- vi9giEQal8EHOBsg43CikQCaGzCDuwU9SnIYf0O0xqI=
+- VpuXlPS3auuL6O9NRp1t4Fq0TcZk/TYY1KNZXM3E21M=
+- f1il1pFDKOnZ3U8xFAvcyidsU4ZnJT1zwIZQRCzzfpA=
