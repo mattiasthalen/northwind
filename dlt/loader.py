@@ -51,9 +51,7 @@ def load_data_pipeline(source_func, env="dev", add_limit=None, **pipeline_kwargs
 
     # Setup dev parameters
     dev_mode = env != "prod"
-    env_name = "dev" if dev_mode else "prod"
     next_item_mode = "fifo" if dev_mode else "round_robin"
-    progress = "enlighten" if dev_mode else "log"
 
     schema_path = "./dlt/schemas/dev" if dev_mode else "./dlt/schemas/prod"
     export_schema_path = os.path.join(schema_path, "export")
@@ -65,7 +63,11 @@ def load_data_pipeline(source_func, env="dev", add_limit=None, **pipeline_kwargs
         except:
             branch_name = "dev"
         finally:
-            dataset_name = f"{dataset_name}__dev__{branch_name.replace('-', '_')}"
+            if branch_name == "dev":
+                dataset_name = f"{dataset_name}_dev"
+            else:
+                dataset_name = f"{dataset_name}_dev_{branch_name.replace('-', '_')}"
+                
             export_schema_path = os.path.join(schema_path, branch_name, "export")
             import_schema_path = os.path.join(schema_path, branch_name, "import")
 
@@ -74,6 +76,11 @@ def load_data_pipeline(source_func, env="dev", add_limit=None, **pipeline_kwargs
 
     # Initialize logging for pipeline monitoring
     setup_pipeline_logging(dataset_name)
+
+    # Turn off progress if in notebook
+    progress = "enlighten"
+    if 'JPY_PARENT_PID' in os.environ or 'JUPYTER_RUNTIME_DIR' in os.environ:
+        progress = None
 
     # Default pipeline configuration
     default_config = {
