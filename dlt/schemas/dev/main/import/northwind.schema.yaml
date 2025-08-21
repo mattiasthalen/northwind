@@ -1,0 +1,205 @@
+version: 1
+version_hash: W0Gd7j3S/Mjo62EG6k2yqNJ+nh+BTYl+T+TWkre5ptg=
+engine_version: 11
+name: northwind
+tables:
+  _dlt_version:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_name:
+        data_type: text
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: false
+      schema:
+        data_type: text
+        nullable: false
+    write_disposition: skip
+    resource: _dlt_version
+    description: Created by DLT. Tracks schema updates
+  _dlt_loads:
+    columns:
+      load_id:
+        data_type: text
+        nullable: false
+        precision: 64
+      schema_name:
+        data_type: text
+        nullable: true
+      status:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_version_hash:
+        data_type: text
+        nullable: true
+    write_disposition: skip
+    resource: _dlt_loads
+    description: Created by DLT. Tracks completed loads
+  raw__northwind__categories:
+    columns:
+      category_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__categories
+  raw__northwind__customers:
+    columns:
+      customer_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__customers
+  raw__northwind__order_details:
+    columns:
+      order_id:
+        nullable: false
+        primary_key: true
+      product_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__order_details
+  raw__northwind__orders:
+    columns:
+      order_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__orders
+  raw__northwind__products:
+    columns:
+      product_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__products
+  raw__northwind__regions:
+    columns:
+      region_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__regions
+  raw__northwind__shippers:
+    columns:
+      shipper_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__shippers
+  raw__northwind__suppliers:
+    columns:
+      supplier_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__suppliers
+  raw__northwind__territories:
+    columns:
+      territory_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__territories
+  raw__northwind__employee_territories:
+    columns:
+      employee_id:
+        nullable: false
+        primary_key: true
+      territory_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__employee_territories
+  raw__northwind__employees:
+    columns:
+      employee_id:
+        nullable: false
+        primary_key: true
+    write_disposition: replace
+    table_format: delta
+    file_format: parquet
+    resource: northwind__employees
+  _dlt_pipeline_state:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      pipeline_name:
+        data_type: text
+        nullable: false
+      state:
+        data_type: text
+        nullable: false
+      created_at:
+        data_type: timestamp
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+        precision: 64
+    write_disposition: append
+    file_format: preferred
+    resource: _dlt_pipeline_state
+settings:
+  detections:
+  - iso_timestamp
+  default_hints:
+    not_null:
+    - _dlt_id
+    - _dlt_root_id
+    - _dlt_parent_id
+    - _dlt_list_idx
+    - _dlt_load_id
+    parent_key:
+    - _dlt_parent_id
+    root_key:
+    - _dlt_root_id
+    unique:
+    - _dlt_id
+    row_key:
+    - _dlt_id
+normalizers:
+  names: snake_case
+  json:
+    module: dlt.common.normalizers.json.relational
+previous_hashes:
+- QAexAoOprkBR/LnbGasEievDu6CIIeRBq6avWhH78HQ=
