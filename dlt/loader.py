@@ -53,7 +53,7 @@ def load_data_pipeline(source_func, env="dev", add_limit=None, **pipeline_kwargs
     dev_mode = env != "prod"
     next_item_mode = "fifo" if dev_mode else "round_robin"
 
-    schema_path = "./dlt/schemas/dev" if dev_mode else "./dlt/schemas/prod"
+    schema_path = "./schemas/dev" if dev_mode else "./schemas/prod"
     export_schema_path = os.path.join(schema_path, "export")
     import_schema_path = os.path.join(schema_path, "import")
 
@@ -100,7 +100,7 @@ def load_data_pipeline(source_func, env="dev", add_limit=None, **pipeline_kwargs
     pipeline = dlt.pipeline(**pipeline_config)
 
     # Execute pipeline with Parquet output for compression
-    load_info = pipeline.run(source_func().add_limit(add_limit), loader_file_format="parquet")
+    load_info = pipeline.run(source_func().add_limit(add_limit), table_format="delta", loader_file_format="parquet")
     print(load_info)
 
     return load_info
