@@ -62,7 +62,8 @@ config = Config(
                 tenant_id=azure__tenant_id,
                 workspace_id=fabric__workspace_id,
                 odbc_properties={
-                    "Authentication": "ActiveDirectoryServicePrincipal"
+                    "Authentication": "ActiveDirectoryServicePrincipal",
+                    "RetryExec": "{40613:3,5}" # Retry connection
                 }
             ),
             state_connection=MSSQLConnectionConfig(
@@ -75,7 +76,8 @@ config = Config(
                 driver="pyodbc",
                 driver_name="ODBC Driver 18 for SQL Server",
                 odbc_properties={
-                    "Authentication": "ActiveDirectoryServicePrincipal"
+                    "Authentication": "ActiveDirectoryServicePrincipal",
+                    "RetryExec": "{40613:3,5}" # Retry connection
                 }
                 
             )
