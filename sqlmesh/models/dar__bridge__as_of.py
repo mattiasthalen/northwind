@@ -6,14 +6,10 @@ from sqlglot import exp
 from sqlmesh.core.model import model
 from sqlmesh.core.macros import MacroEvaluator
 
-def get_frames_path() -> str:
-    """Returns the absolute path to the frames.yml file."""
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Correct path: from sqlmesh/models/dar/uss/bridge__as_of__blueprint.py to sqlmesh/models/dab/hook/frames.yml
-    return os.path.abspath(os.path.join(script_dir, "frames.yml"))
-
-def load_frames(path: str) -> List[Dict[str, Any]]:
+def load_frames() -> List[Dict[str, Any]]:
     """Loads frames from a YAML file."""
+    path = "models/frames.yml"
+
     with open(path, 'r') as f:
         return yaml.safe_load(f)
 
@@ -79,7 +75,7 @@ def union_selects(select_expressions: List[exp.Select]) -> exp.Expression:
 )
 def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
     """The entrypoint function for the SQLMesh model."""
-    frames = load_frames(get_frames_path())
+    frames = load_frames()
     tables = get_table_names(frames)
     
     if not tables:
