@@ -14,15 +14,6 @@
     keyset: northwind.category.name
     expression: category_name
 
-- name: northwind__category_details
-  hooks:
-  - name: _hook__category__detail
-    primary: true
-    concept: category
-    qualifier: id
-    keyset: northwind.category.id
-    expression: category_id
-
 - name: northwind__customers
   hooks:
   - name: _hook__customer__id
@@ -55,7 +46,7 @@
     concept: employee
     qualifier: id
     keyset: northwind.employee.id
-    expression: _get_northwindapiv_1_employees_employee_id
+    expression: employee_id
 
   - name: _hook__territory__id
     primary: false

@@ -6,12 +6,11 @@ MODEL (
   ),
   blueprints (
     (source := northwind__categories, @unique_key := category_id),
-    (source := northwind__category_details, @unique_key := category_id),
     (source := northwind__customers, @unique_key := customer_id),
     (source := northwind__employees, @unique_key := employee_id),
     (
       source := northwind__employee_territories,
-      @unique_key := CONCAT(_get_northwindapiv_1_employees_employee_id::TEXT, '|', territory_id::TEXT)
+      @unique_key := CONCAT(employee_id::TEXT, '|', territory_id::TEXT)
     ),
     (
       source := northwind__order_details,

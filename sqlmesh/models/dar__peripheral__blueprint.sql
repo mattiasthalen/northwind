@@ -10,12 +10,6 @@ MODEL (
       suffix := '__northwind__categories'
     ),
     (
-      source_table := dab.hook.frame__northwind__category_details,
-      target_table := dar.uss.northwind__category_details,
-      pit_hook := _pit_hook__category__detail,
-      suffix := '__northwind__category_details'
-    ),
-    (
       source_table := dab.hook.frame__northwind__customers,
       target_table := dar.uss.northwind__customers,
       pit_hook := _pit_hook__customer__id,
