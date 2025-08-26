@@ -110,7 +110,7 @@ frames_to_generate = filter_frames(frames)
 
 @model(
     "dab.hook.frame__@{name}",
-    enabled=True,
+    enabled=False,
     is_sql=True,
     kind=dict(
         name=ModelKindName.INCREMENTAL_BY_TIME_RANGE,

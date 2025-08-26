@@ -124,7 +124,7 @@ frames = load_frames(frames_path)
 
 @model(
     "dar.uss__staging._bridge__@{name}",
-    enabled=True,
+    enabled=False,
     is_sql=True,
     kind=dict(
         name=ModelKindName.INCREMENTAL_BY_TIME_RANGE,

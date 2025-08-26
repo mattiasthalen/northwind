@@ -69,7 +69,7 @@ def union_selects(select_expressions: List[exp.Select]) -> exp.Expression:
 
 @model(
     "dar.uss._bridge__as_of",
-    enabled=True,
+    enabled=False,
     is_sql=True,
     kind="VIEW"
 )

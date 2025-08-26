@@ -1,6 +1,6 @@
 MODEL (
   name dar.uss._bridge__as_is,
-  enabled TRUE,
+  enabled FALSE,
   kind VIEW
 );
 
