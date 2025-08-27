@@ -8,7 +8,7 @@ from sqlmesh.core.macros import MacroEvaluator
 
 def load_frames() -> List[Dict[str, Any]]:
     """Loads frames from a YAML file."""
-    path = "models/frames.yml"
+    path = "sqlmesh/models/frames.yml"
 
     with open(path, 'r') as f:
         return yaml.safe_load(f)
