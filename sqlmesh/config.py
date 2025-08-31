@@ -45,7 +45,7 @@ default_environment = f"dev__{branch}".replace('-', '_') if branch else "dev"
 print(f"Environment is set to: {default_environment}.")
 
 config = Config(
-    project="northwind-to-fabric",
+    project="northwind",
     default_target_environment=default_environment,
     gateways={
         "fabric": GatewayConfig(
