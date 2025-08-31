@@ -147,14 +147,17 @@
   events:
     - name: Product ordered at
       source: dab.hook.northwind__orders
+      join_on: _hook__order__id
       expression: order_date
 
     - name: Product required at
       source: dab.hook.northwind__orders
+      join_on: _hook__order__id
       expression: required_date
 
     - name: Product shipped at
       source: dab.hook.northwind__orders
+      join_on: _hook__order__id
       expression: shipped_date
 
     - name: Order detail record updated at
