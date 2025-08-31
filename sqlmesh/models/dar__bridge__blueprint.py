@@ -8,8 +8,8 @@ from sqlmesh.core.macros import MacroEvaluator
 from sqlmesh.core.model.kind import ModelKindName
 
 # --- File and Frame Utilities ---
-def load_frames() -> List[Dict[str, Any]]:
-    """Loads frames from a YAML file."""
+def load_model_yaml() -> List[Dict[str, Any]]:
+    """Loads models from a YAML file."""
     path = "sqlmesh/models/models.yml"
 
     with open(path, 'r') as f:
@@ -119,7 +119,7 @@ def build_validity_expressions(tables: List[str]) -> Dict[str, exp.Expression]:
 
 
 # --- Main Entrypoint ---
-frames = load_frames()
+models = load_model_yaml()
 
 @model(
     "dar.uss__staging._bridge__@{name}",
@@ -130,7 +130,7 @@ frames = load_frames()
         time_column="_record__updated_at",
     ),
     cron="*/5 * * * *",  # Run every 5 min, the smallest cron supported by SQLMesh
-    blueprints=frames,
+    blueprints=models,
 )
 def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     name = evaluator.blueprint_var("name")
@@ -146,11 +146,11 @@ def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     if not primary_hook:
         raise ValueError(f"No primary hook found for frame {name}")
 
-    foreign_hooks = get_foreign_hooks(frame, primary_hook, frames)
+    foreign_hooks = get_foreign_hooks(frame, primary_hook, models)
     
     left_table = name
-    join_data = build_joins(foreign_hooks, left_table, frames, evaluator)
-    
+    join_data = build_joins(foreign_hooks, left_table, models, evaluator)
+
     validity_expressions = build_validity_expressions(join_data["record_metadata_tables"])
 
     sql = (

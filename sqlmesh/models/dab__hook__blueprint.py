@@ -8,8 +8,8 @@ from sqlmesh.core.macros import MacroEvaluator
 from sqlmesh.core.model.kind import ModelKindName
 
 # --- File and Frame Utilities ---
-def load_frames() -> List[Dict[str, Any]]:
-    """Loads frames from a YAML file."""
+def load_model_yaml() -> List[Dict[str, Any]]:
+    """Loads models from a YAML file."""
     path = "sqlmesh/models/models.yml"
 
     with open(path, 'r') as f:
@@ -104,8 +104,8 @@ def build_cte_primary_hook(primary_hook_expression: Optional[exp.Expression]) ->
     return exp.select(primary_hook_expression, exp.Star()).from_("cte__composite_hooks")
 
 # --- Main Entrypoint ---
-frames = load_frames()
-frames_to_generate = filter_frames(frames)
+models = load_model_yaml()
+models_to_generate = filter_frames(models)
 
 @model(
     "dab.hook.@{name}",
@@ -115,7 +115,7 @@ frames_to_generate = filter_frames(frames)
         name=ModelKindName.INCREMENTAL_BY_TIME_RANGE,
         time_column="_record__updated_at",
     ),
-    blueprints=frames_to_generate,
+    blueprints=models_to_generate,
 )
 def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     name = evaluator.blueprint_var("name")
