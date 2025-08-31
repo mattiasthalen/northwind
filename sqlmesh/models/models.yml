@@ -161,6 +161,8 @@
       expression: shipped_date
 
     - name: Order detail record updated at
+      source: dab.hook.northwind__order_details
+      join_on: _pit_hook__order__product
       expression: _record__updated_at
 
 - name: northwind__products
