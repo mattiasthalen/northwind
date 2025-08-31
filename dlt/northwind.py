@@ -29,8 +29,7 @@ def northwind_source() -> t.Any:
         },
         "resources": [
             {
-                "name": "northwind__categories",
-                "table_name": "raw__northwind__categories",
+                "name": "categories",
                 "primary_key": "CategoryId",
                 "endpoint": {
                     "path": "Categories",
@@ -38,8 +37,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__customers",
-                "table_name": "raw__northwind__customers",
+                "name": "customers",
                 "primary_key": "CustomerId",
                 "endpoint": {
                     "path": "Customers",
@@ -47,8 +45,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__employees",
-                "table_name": "raw__northwind__employees",
+                "name": "employees",
                 "primary_key": "EmployeeId",
                 "endpoint": {
                     "path": "Employees",
@@ -56,15 +53,14 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__employee_territories",
-                "table_name": "raw__northwind__employee_territories",
+                "name": "employee_territories",
                 "primary_key": ["EmployeeId", "TerritoryId"],
                 "endpoint": {
                     "path": "Employees({id})/EmployeeTerritories",
                     "params": {
                         "id": {
                             "type": "resolve",
-                            "resource": "northwind__employees",
+                            "resource": "employees",
                             "field": "EmployeeId"
                         }
                     },
@@ -72,8 +68,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__order_details",
-                "table_name": "raw__northwind__order_details",
+                "name": "order_details",
                 "primary_key": ["OrderId", "ProductId"],
                 "endpoint": {
                     "path": "OrderDetails",
@@ -81,8 +76,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__orders",
-                "table_name": "raw__northwind__orders",
+                "name": "orders",
                 "primary_key": "OrderId",
                 "endpoint": {
                     "path": "Orders",
@@ -90,8 +84,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__products",
-                "table_name": "raw__northwind__products",
+                "name": "products",
                 "primary_key": "ProductId",
                 "endpoint": {
                     "path": "Products",
@@ -99,8 +92,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__regions",
-                "table_name": "raw__northwind__regions",
+                "name": "regions",
                 "primary_key": "RegionId",
                 "endpoint": {
                     "path": "Regions",
@@ -108,8 +100,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__shippers",
-                "table_name": "raw__northwind__shippers",
+                "name": "shippers",
                 "primary_key": "ShipperId",
                 "endpoint": {
                     "path": "Shippers",
@@ -117,8 +108,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__suppliers",
-                "table_name": "raw__northwind__suppliers",
+                "name": "suppliers",
                 "primary_key": "SupplierId",
                 "endpoint": {
                     "path": "Suppliers",
@@ -126,8 +116,7 @@ def northwind_source() -> t.Any:
             },
 
             {
-                "name": "northwind__territories",
-                "table_name": "raw__northwind__territories",
+                "name": "territories",
                 "primary_key": "TerritoryId",
                 "endpoint": {
                     "path": "Territories",
