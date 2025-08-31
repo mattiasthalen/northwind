@@ -15,17 +15,8 @@
     expression: category_name
 
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Category record updated at
+      expression: _record__updated_at
 
 - name: northwind__customers
   hooks:
@@ -44,17 +35,8 @@
     expression: company_name
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Customer record updated at
+      expression: _record__updated_at
 
 - name: northwind__employees
   hooks:
@@ -66,17 +48,8 @@
     expression: employee_id
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Employee record updated at
+      expression: _record__updated_at
 
 - name: northwind__employee_territories
   hooks:
@@ -102,17 +75,8 @@
     - _hook__territory__id
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Employee territory record updated at
+      expression: _record__updated_at
 
 - name: northwind__orders
   hooks:
@@ -145,17 +109,17 @@
     expression: ship_via
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
+    - name: Order placed at
+      expression: order_date
 
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
+    - name: Order required at
+      expression: required_date
 
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Order shipped at
+      expression: shipped_date
+
+    - name: Order record updated at
+      expression: _record__updated_at
 
 - name: northwind__order_details
   hooks:
@@ -181,17 +145,20 @@
     - _hook__product__id
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
+    - name: Product ordered at
+      source: dab.hook.northwind__orders
+      expression: order_date
 
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
+    - name: Product required at
+      source: dab.hook.northwind__orders
+      expression: required_date
 
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Product shipped at
+      source: dab.hook.northwind__orders
+      expression: shipped_date
+
+    - name: Order detail record updated at
+      expression: _record__updated_at
 
 - name: northwind__products
   hooks:
@@ -231,17 +198,8 @@
     expression: category_id
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Category detail record updated at
+      expression: _record__updated_at
 
 - name: northwind__regions
   hooks:
@@ -260,17 +218,8 @@
     expression: region_description
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Region record updated at
+      expression: _record__updated_at
 
 - name: northwind__shippers
   hooks:
@@ -289,17 +238,8 @@
     expression: company_name
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Shipper record updated at
+      expression: _record__updated_at
 
 - name: northwind__suppliers
   hooks:
@@ -318,17 +258,8 @@
     expression: company_name
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Supplier record updated at
+      expression: _record__updated_at
 
 - name: northwind__territories
   hooks:
@@ -354,14 +285,5 @@
     expression: region_id
     
   events:
-    - name: Record Loaded At
-      expression: _record__loaded_at::TIMESTAMP
-
-    - name: Record Updated At
-      expression: _record__updated_at::TIMESTAMP
-
-    - name: Record Valid From
-      expression: _record__valid_from::TIMESTAMP
-      
-    - name: Record Valid To
-      expression: _record__valid_to::TIMESTAMP
+    - name: Territory record updated at
+      expression: _record__updated_at
