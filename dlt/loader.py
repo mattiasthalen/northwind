@@ -53,7 +53,7 @@ def load_data_pipeline(source_func, env="dev", add_limit=None, **pipeline_kwargs
     dev_mode = env != "prod"
     next_item_mode = "fifo" if dev_mode else "round_robin"
 
-    schema_path = "./schemas/dev" if dev_mode else "./schemas/prod"
+    schema_path = "./dlt/schemas/dev" if dev_mode else "./schemas/prod"
     export_schema_path = os.path.join(schema_path, "export")
     import_schema_path = os.path.join(schema_path, "import")
 
