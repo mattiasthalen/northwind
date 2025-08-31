@@ -14,6 +14,19 @@
     keyset: northwind.category.name
     expression: category_name
 
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
+
 - name: northwind__customers
   hooks:
   - name: _hook__customer__id
@@ -29,6 +42,19 @@
     qualifier: name
     keyset: northwind.customer.name
     expression: company_name
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__employees
   hooks:
@@ -38,6 +64,19 @@
     qualifier: id
     keyset: northwind.employee.id
     expression: employee_id
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__employee_territories
   hooks:
@@ -61,6 +100,19 @@
     hooks:
     - _hook__employee__id
     - _hook__territory__id
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__orders
   hooks:
@@ -91,6 +143,19 @@
     qualifier: id
     keyset: northwind.shipper.id
     expression: ship_via
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__order_details
   hooks:
@@ -114,6 +179,19 @@
     hooks:
     - _hook__order__id
     - _hook__product__id
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__products
   hooks:
@@ -151,6 +229,19 @@
     qualifier: id
     keyset: northwind.category.id
     expression: category_id
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__regions
   hooks:
@@ -167,6 +258,19 @@
     qualifier: name
     keyset: northwind.region.name
     expression: region_description
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__shippers
   hooks:
@@ -183,6 +287,19 @@
     qualifier: name
     keyset: northwind.shipper.name
     expression: company_name
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__suppliers
   hooks:
@@ -199,6 +316,19 @@
     qualifier: name
     keyset: northwind.supplier.name
     expression: company_name
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
 
 - name: northwind__territories
   hooks:
@@ -222,3 +352,16 @@
     qualifier: id
     keyset: northwind.region.id
     expression: region_id
+    
+  events:
+    - name: Record Loaded At
+      expression: _record__loaded_at::TIMESTAMP
+
+    - name: Record Updated At
+      expression: _record__updated_at::TIMESTAMP
+
+    - name: Record Valid From
+      expression: _record__valid_from::TIMESTAMP
+      
+    - name: Record Valid To
+      expression: _record__valid_to::TIMESTAMP
