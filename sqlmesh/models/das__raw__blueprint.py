@@ -12,12 +12,9 @@ from sqlmesh.core import macros
 def _normalize_schemas(schemas: str | list[str]) -> list[str]:
     return [schemas] if isinstance(schemas, str) else schemas
 
-def _schema_path(script_dir: str, schema: str) -> str:
-    rel_path = f"../../dlt/schemas/prod/export/{schema}.schema.yaml"
-    return os.path.normpath(os.path.join(script_dir, rel_path))
-
-def _load_schema_dict(schema_path: str) -> dict:
-    with open(schema_path, 'r') as f:
+def _load_schema_dict(schema: str) -> dict:
+    path = f"./dlt/schemas/prod/export/{schema}.schema.yaml"
+    with open(path, 'r') as f:
         return yaml.safe_load(f)
 
 def _extract_blueprints(
@@ -40,8 +37,7 @@ def generate_blueprints(schemas) -> list[dict[str, t.Any]]:
     script_dir = os.path.dirname(os.path.abspath(__file__))
     blueprints = []
     for schema in _normalize_schemas(schemas):
-        path = _schema_path(script_dir, schema)
-        schema_dict = _load_schema_dict(path)
+        schema_dict = _load_schema_dict(schema)
         blueprints.extend(_extract_blueprints(schema, schema_dict))
     return blueprints
 
@@ -170,7 +166,7 @@ def build_sql_select(
 
 # --- Model Entrypoint ---
 @model(
-    "das.raw.@{name}",
+    "das.raw.@{schema}__@{name}",
     is_sql=True,
     kind=dict(
         name=ModelKindName.INCREMENTAL_UNMANAGED,
@@ -186,11 +182,13 @@ def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
         raise ValueError("Blueprint variable 'name' must be a non-empty string")
 
     schema = evaluator.blueprint_var("schema")
-    columns = evaluator.blueprint_var("columns")
     source_table = f"landing_zone.{schema}.{name}"
+    target_name = f"{schema}__{name}"
+
+    columns = evaluator.blueprint_var("columns")
     source_columns = build_source_columns(columns)
     columns_to_hash = get_columns_to_hash(source_columns)
 
-    sql = build_sql_select(name, source_table, source_columns, columns_to_hash)
+    sql = build_sql_select(target_name, source_table, source_columns, columns_to_hash)
 
     return sql

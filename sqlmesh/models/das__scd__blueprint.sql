@@ -1,5 +1,5 @@
 MODEL (
-  name das.scd.scd__@source,
+  name das.scd.@source,
   enabled TRUE,
   kind INCREMENTAL_BY_UNIQUE_KEY (
     unique_key _record__hash
@@ -29,7 +29,7 @@ WITH cte__source AS (
   SELECT
     *,
     @unique_key AS _unique_key
-  FROM das.raw.raw__@source
+  FROM das.raw.@source
 ), cte__changed_ids AS (
   SELECT DISTINCT
     _unique_key
@@ -115,7 +115,7 @@ WITH cte__source AS (
     )
 )
 SELECT
-  @STAR__LIST(table_name := das.raw.raw__@source),
+  @STAR__LIST(table_name := das.raw.@source),
   _record__updated_at,
   _record__valid_from,
   _record__valid_to,

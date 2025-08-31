@@ -8,10 +8,10 @@ from sqlmesh.core.macros import MacroEvaluator
 from sqlmesh.core.model.kind import ModelKindName
 
 # --- File and Frame Utilities ---
-def get_frames_path() -> str:
-    return os.path.join(os.path.dirname(__file__), "frames.yml")
+def load_frames() -> List[Dict[str, Any]]:
+    """Loads frames from a YAML file."""
+    path = "sqlmesh/models/models.yml"
 
-def load_frames(path: str) -> List[Dict[str, Any]]:
     with open(path, 'r') as f:
         return yaml.safe_load(f)
 
@@ -119,12 +119,11 @@ def build_validity_expressions(tables: List[str]) -> Dict[str, exp.Expression]:
 
 
 # --- Main Entrypoint ---
-frames_path = get_frames_path()
-frames = load_frames(frames_path)
+frames = load_frames()
 
 @model(
     "dar.uss__staging._bridge__@{name}",
-    enabled=False,
+    enabled=True,
     is_sql=True,
     kind=dict(
         name=ModelKindName.INCREMENTAL_BY_TIME_RANGE,
@@ -135,6 +134,10 @@ frames = load_frames(frames_path)
 )
 def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     name = evaluator.blueprint_var("name")
+
+    if not isinstance(name, str) or not name:
+        raise ValueError("Blueprint variable 'name' must be a non-empty string")
+    
     hooks = evaluator.blueprint_var("hooks") or []
     composite_hooks = evaluator.blueprint_var("composite_hooks") or []
     frame = {"hooks": hooks, "composite_hooks": composite_hooks}
@@ -145,7 +148,7 @@ def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
 
     foreign_hooks = get_foreign_hooks(frame, primary_hook, frames)
     
-    left_table = f"frame__{name}"
+    left_table = name
     join_data = build_joins(foreign_hooks, left_table, frames, evaluator)
     
     validity_expressions = build_validity_expressions(join_data["record_metadata_tables"])
@@ -161,7 +164,7 @@ def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
             validity_expressions["record__valid_to"].as_("_record__valid_to"),
             validity_expressions["record__is_current"].as_("_record__is_current")
         )
-        .from_(f"dab.hook.frame__{name}")
+        .from_(f"dab.hook.{name}")
     )
 
     for join in join_data["joins"]:

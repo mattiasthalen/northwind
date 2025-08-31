@@ -69,7 +69,7 @@ pip install -r requirements.txt
     - `das__*`: Data According to System (raw layer)
     - `dab__*`: Data According to Business (HOOK integration layer)
     - `dar__*`: Data According to Requirements (analytical layer)
-  - `frames.yml`: HOOK entity configuration
+  - `models.yml`: HOOK entity configuration
   - `keysets.yml`: HOOK keyset definitions
   - `macros/`: Custom SQLMesh macros including USS helpers
   
@@ -83,18 +83,17 @@ Source → DAS (Raw/SCD) → DAB (HOOK Integration) → DAR (USS Analytics) → 
 ```
 
 1. **DAS Layer**: dlt extracts data from Northwind REST API into OneLake
-   - `das__raw__*`: Direct copies of source data
-   - `das__scd__*`: Slowly changing dimensions with temporal tracking
+   - `das.raw.*`: Direct copies of source data
+   - `das.scd.*`: Historized version of raw
 
 2. **DAB Layer**: HOOK integration for business entities
-   - `dab__hook__frame__*`: HOOK-enabled business entities
+   - `dab.hook.*`: HOOK-enabled business entities
    - Primary hooks with PIT (point-in-time) markers
    - Composite hooks for relationships
 
 3. **DAR Layer**: Analytical consumption through USS
-   - `dar__bridge__*`: Complex relationship models using HOOK joins
-   - `dar__peripheral__*`: Supporting dimension tables
-   - `dar__star__*`: Unified star schemas for BI tools
+   - `dar.uss._bridge*`: Complex relationship models using HOOK joins
+   - `dar.uss.*`: Supporting dimension tables
 
 ### Environment Variables Required
 All credentials are loaded from Azure KeyVault and Fabric Variable Library in production. For local development:
@@ -157,7 +156,7 @@ When creating new SQLMesh models:
    - DAB layer: `dab__hook__frame__[entity]`
    - DAR layer: `dar__bridge__[entity]`, `dar__peripheral__[entity]`, `dar__star__[schema]`
 
-2. **Configure HOOK entities in `frames.yml`**:
+2. **Configure HOOK entities in `models.yml`**:
    ```yaml
    - name: entity_name
      hooks:

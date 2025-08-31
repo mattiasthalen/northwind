@@ -8,7 +8,7 @@ from sqlmesh.core.macros import MacroEvaluator
 
 def load_frames() -> List[Dict[str, Any]]:
     """Loads frames from a YAML file."""
-    path = "sqlmesh/models/frames.yml"
+    path = "sqlmesh/models/models.yml"
 
     with open(path, 'r') as f:
         return yaml.safe_load(f)
@@ -69,7 +69,7 @@ def union_selects(select_expressions: List[exp.Select]) -> exp.Expression:
 
 @model(
     "dar.uss._bridge__as_of",
-    enabled=False,
+    enabled=True,
     is_sql=True,
     kind="VIEW"
 )

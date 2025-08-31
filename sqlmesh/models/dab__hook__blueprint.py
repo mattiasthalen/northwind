@@ -10,7 +10,7 @@ from sqlmesh.core.model.kind import ModelKindName
 # --- File and Frame Utilities ---
 def load_frames() -> List[Dict[str, Any]]:
     """Loads frames from a YAML file."""
-    path = "sqlmesh/models/frames.yml"
+    path = "sqlmesh/models/models.yml"
 
     with open(path, 'r') as f:
         return yaml.safe_load(f)
@@ -108,7 +108,7 @@ frames = load_frames()
 frames_to_generate = filter_frames(frames)
 
 @model(
-    "dab.hook.frame__@{name}",
+    "dab.hook.@{name}",
     enabled=True,
     is_sql=True,
     kind=dict(
@@ -121,7 +121,7 @@ def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     name = evaluator.blueprint_var("name")
     hooks = evaluator.blueprint_var("hooks")
     composite_hooks = evaluator.blueprint_var("composite_hooks")
-    source_table = f"das.scd.scd__{name}"
+    source_table = f"das.scd.{name}"
     source_columns = evaluator.columns_to_types(source_table).keys()
 
     all_hooks, primary_hook, hook_expressions = process_hooks(hooks)
