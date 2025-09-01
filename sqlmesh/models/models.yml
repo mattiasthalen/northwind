@@ -16,6 +16,8 @@
 
   events:
     - name: Category record updated at
+      source: dab.hook.northwind__categories
+      join_on: _pit_hook__category__id
       expression: _record__updated_at
 
 - name: northwind__customers
@@ -36,6 +38,8 @@
     
   events:
     - name: Customer record updated at
+      source: dab.hook.northwind__customers
+      join_on: _pit_hook__customer__id
       expression: _record__updated_at
 
 - name: northwind__employees
@@ -49,6 +53,8 @@
     
   events:
     - name: Employee record updated at
+      source: dab.hook.northwind__employees
+      join_on: _pit_hook__employee__id
       expression: _record__updated_at
 
 - name: northwind__employee_territories
@@ -76,6 +82,8 @@
     
   events:
     - name: Employee territory record updated at
+      source: dab.hook.northwind__employee_territories
+      join_on: _pit_hook__employee__territory
       expression: _record__updated_at
 
 - name: northwind__orders
@@ -110,15 +118,23 @@
     
   events:
     - name: Order placed at
+      source: dab.hook.northwind__orders
+      join_on: _pit_hook__order__id
       expression: order_date
 
     - name: Order required at
+      source: dab.hook.northwind__orders
+      join_on: _pit_hook__order__id
       expression: required_date
 
     - name: Order shipped at
+      source: dab.hook.northwind__orders
+      join_on: _pit_hook__order__id
       expression: shipped_date
 
     - name: Order record updated at
+      source: dab.hook.northwind__orders
+      join_on: _pit_hook__order__id
       expression: _record__updated_at
 
 - name: northwind__order_details
@@ -147,17 +163,17 @@
   events:
     - name: Product ordered at
       source: dab.hook.northwind__orders
-      join_on: _hook__order__id
+      join_on: _pit_hook__order__id
       expression: order_date
 
     - name: Product required at
       source: dab.hook.northwind__orders
-      join_on: _hook__order__id
+      join_on: _pit_hook__order__id
       expression: required_date
 
     - name: Product shipped at
       source: dab.hook.northwind__orders
-      join_on: _hook__order__id
+      join_on: _pit_hook__order__id
       expression: shipped_date
 
     - name: Order detail record updated at
@@ -204,6 +220,8 @@
     
   events:
     - name: Category detail record updated at
+      source: dab.hook.northwind__categories
+      join_on: _pit_hook__category__detail
       expression: _record__updated_at
 
 - name: northwind__regions
@@ -224,6 +242,8 @@
     
   events:
     - name: Region record updated at
+      source: dab.hook.northwind__regions
+      join_on: _pit_hook__region__id
       expression: _record__updated_at
 
 - name: northwind__shippers
@@ -244,6 +264,8 @@
     
   events:
     - name: Shipper record updated at
+      source: dab.hook.northwind__shippers
+      join_on: _pit_hook__shipper__id
       expression: _record__updated_at
 
 - name: northwind__suppliers
@@ -264,6 +286,8 @@
     
   events:
     - name: Supplier record updated at
+      source: dab.hook.northwind__suppliers
+      join_on: _pit_hook__supplier__id
       expression: _record__updated_at
 
 - name: northwind__territories
@@ -291,4 +315,6 @@
     
   events:
     - name: Territory record updated at
+      source: dab.hook.northwind__territories
+      join_on: _pit_hook__territory__id
       expression: _record__updated_at
