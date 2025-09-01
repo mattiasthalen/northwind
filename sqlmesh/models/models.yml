@@ -15,7 +15,7 @@
     expression: category_name
 
   events:
-    - name: Category record updated at
+    - name: category_record_updated_at
       source: dab.hook.northwind__categories
       join_on: _pit_hook__category__id
       expression: _record__updated_at
@@ -35,9 +35,9 @@
     qualifier: name
     keyset: northwind.customer.name
     expression: company_name
-    
+
   events:
-    - name: Customer record updated at
+    - name: customer_record_updated_at
       source: dab.hook.northwind__customers
       join_on: _pit_hook__customer__id
       expression: _record__updated_at
@@ -50,9 +50,9 @@
     qualifier: id
     keyset: northwind.employee.id
     expression: employee_id
-    
+
   events:
-    - name: Employee record updated at
+    - name: employee_record_updated_at
       source: dab.hook.northwind__employees
       join_on: _pit_hook__employee__id
       expression: _record__updated_at
@@ -72,16 +72,16 @@
     qualifier: id
     keyset: northwind.territory.id
     expression: territory_id
-    
+
   composite_hooks:
   - name: _hook__employee__territory
     primary: true
     hooks:
     - _hook__employee__id
     - _hook__territory__id
-    
+
   events:
-    - name: Employee territory record updated at
+    - name: employee_territory_record_updated_at
       source: dab.hook.northwind__employee_territories
       join_on: _pit_hook__employee__territory
       expression: _record__updated_at
@@ -115,24 +115,24 @@
     qualifier: id
     keyset: northwind.shipper.id
     expression: ship_via
-    
+
   events:
-    - name: Order placed at
+    - name: order_placed_at
       source: dab.hook.northwind__orders
       join_on: _pit_hook__order__id
       expression: order_date
 
-    - name: Order required at
+    - name: order_required_at
       source: dab.hook.northwind__orders
       join_on: _pit_hook__order__id
       expression: required_date
 
-    - name: Order shipped at
+    - name: order_shipped_at
       source: dab.hook.northwind__orders
       join_on: _pit_hook__order__id
       expression: shipped_date
 
-    - name: Order record updated at
+    - name: order_record_updated_at
       source: dab.hook.northwind__orders
       join_on: _pit_hook__order__id
       expression: _record__updated_at
@@ -159,24 +159,24 @@
     hooks:
     - _hook__order__id
     - _hook__product__id
-    
+
   events:
-    - name: Product ordered at
+    - name: product_ordered_at
       source: dab.hook.northwind__orders
       join_on: _pit_hook__order__id
       expression: order_date
 
-    - name: Product required at
+    - name: product_required_at
       source: dab.hook.northwind__orders
       join_on: _pit_hook__order__id
       expression: required_date
 
-    - name: Product shipped at
+    - name: product_shipped_at
       source: dab.hook.northwind__orders
       join_on: _pit_hook__order__id
       expression: shipped_date
 
-    - name: Order detail record updated at
+    - name: order_detail_record_updated_at
       source: dab.hook.northwind__order_details
       join_on: _pit_hook__order__product
       expression: _record__updated_at
@@ -217,11 +217,11 @@
     qualifier: id
     keyset: northwind.category.id
     expression: category_id
-    
+
   events:
-    - name: Category detail record updated at
-      source: dab.hook.northwind__categories
-      join_on: _pit_hook__category__detail
+    - name: product_record_updated_at
+      source: dab.hook.northwind__products
+      join_on: _pit_hook__product__id
       expression: _record__updated_at
 
 - name: northwind__regions
@@ -239,9 +239,9 @@
     qualifier: name
     keyset: northwind.region.name
     expression: region_description
-    
+
   events:
-    - name: Region record updated at
+    - name: region_record_updated_at
       source: dab.hook.northwind__regions
       join_on: _pit_hook__region__id
       expression: _record__updated_at
@@ -261,9 +261,9 @@
     qualifier: name
     keyset: northwind.shipper.name
     expression: company_name
-    
+
   events:
-    - name: Shipper record updated at
+    - name: shipper_record_updated_at
       source: dab.hook.northwind__shippers
       join_on: _pit_hook__shipper__id
       expression: _record__updated_at
@@ -283,9 +283,9 @@
     qualifier: name
     keyset: northwind.supplier.name
     expression: company_name
-    
+
   events:
-    - name: Supplier record updated at
+    - name: supplier_record_updated_at
       source: dab.hook.northwind__suppliers
       join_on: _pit_hook__supplier__id
       expression: _record__updated_at
@@ -312,9 +312,9 @@
     qualifier: id
     keyset: northwind.region.id
     expression: region_id
-    
+
   events:
-    - name: Territory record updated at
+    - name: territory_record_updated_at
       source: dab.hook.northwind__territories
       join_on: _pit_hook__territory__id
       expression: _record__updated_at
