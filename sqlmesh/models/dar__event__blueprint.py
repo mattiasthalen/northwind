@@ -95,12 +95,31 @@ def build_event_bridge_sql(
     cte__unpivot = evaluator.parse_one(unpivot_sql)
     
     # Build the final SELECT
+    record_columns = [exp.column(col) for col in bridge_columns if col.startswith("_record__")]
+    non_record_columns = [exp.column(col) for col in bridge_columns if not col.startswith("_record__")]
+
+    event = exp.column("event")
+
+    event_occurred_on = exp.cast(
+        exp.column("event_occurred_at"),
+        exp.DataType.build("DATE")
+    ).as_("event_occurred_on")
+
+    event_occurred_at = exp.cast(
+        exp.column("event_occurred_at"),
+        exp.DataType(this=exp.DataType.Type.TIME, expressions=[exp.Literal.number(0)])
+    ).as_("event_occurred_at")
+
+    final_fields = [
+        *non_record_columns,
+        event,
+        event_occurred_on,
+        event_occurred_at,
+        *record_columns
+    ]
+
     final_select = exp.select(
-        *[exp.column(col) for col in bridge_columns if not col.startswith("_record__")],
-        exp.column("event"),
-        exp.cast(exp.column("event_occurred_at"), exp.DataType.build("DATE")).as_("event_occurred_on"),
-        exp.cast(exp.column("event_occurred_at"), exp.DataType.build("TIME")).as_("event_occurred_at"),
-        *[exp.column(col) for col in bridge_columns if col.startswith("_record__")]
+        *final_fields
     ).from_("cte__unpivot")
     
     # Add WHERE clause
