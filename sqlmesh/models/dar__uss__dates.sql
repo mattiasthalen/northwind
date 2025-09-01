@@ -1,0 +1,47 @@
+MODEL (
+  name dar.uss.dates,
+  enabled TRUE,
+  kind VIEW
+);
+
+SELECT
+  date::DATE AS event_occurred_on,
+  date::DATE,
+  year::INTEGER,
+  quarter::INTEGER,
+  month::INTEGER,
+  week::INTEGER,
+  day_of_year::INTEGER,
+  day_of_month::INTEGER,
+  day_of_week::INTEGER,
+  iso_year::INTEGER,
+  iso_week::INTEGER,
+  iso_day::INTEGER,
+  iso_week_date::TEXT,
+  week_of_year::INTEGER,
+  month_name::TEXT,
+  month_name_short::TEXT,
+  day_name::TEXT,
+  day_name_short::TEXT,
+  is_weekend::BOOLEAN,
+  is_weekday::BOOLEAN,
+  is_month_start::BOOLEAN,
+  is_month_end::BOOLEAN,
+  is_quarter_start::BOOLEAN,
+  is_quarter_end::BOOLEAN,
+  is_year_start::BOOLEAN,
+  is_year_end::BOOLEAN,
+  is_leap_year::BOOLEAN,
+  days_in_month::INTEGER,
+  quarter_name::TEXT,
+  year_month::TEXT,
+  year_quarter::TEXT,
+  year_week::TEXT,
+  fiscal_year::INTEGER,
+  fiscal_quarter::INTEGER,
+  fiscal_month::INTEGER,
+  fiscal_week::INTEGER,
+  date_int::INTEGER,
+  date_iso::TEXT
+FROM das.raw.dates
+;

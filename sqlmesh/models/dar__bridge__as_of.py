@@ -6,8 +6,8 @@ from sqlglot import exp
 from sqlmesh.core.model import model
 from sqlmesh.core.macros import MacroEvaluator
 
-def load_frames() -> List[Dict[str, Any]]:
-    """Loads frames from a YAML file."""
+def load_model_yaml() -> List[Dict[str, Any]]:
+    """Loads models from a YAML file."""
     path = "sqlmesh/models/models.yml"
 
     with open(path, 'r') as f:
@@ -15,7 +15,7 @@ def load_frames() -> List[Dict[str, Any]]:
 
 def get_table_names(frames: List[Dict[str, Any]]) -> List[str]:
     """Generates a list of table names from frames."""
-    return ["dar.uss__staging._bridge__" + frame["name"] for frame in frames]
+    return ["dar.uss__staging._event_bridge__" + frame["name"] for frame in frames]
 
 def get_all_columns(evaluator: MacroEvaluator, tables: List[str]) -> List[str]:
     """Gets a sorted list of unique column names from all tables."""
@@ -75,7 +75,7 @@ def union_selects(select_expressions: List[exp.Select]) -> exp.Expression:
 )
 def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
     """The entrypoint function for the SQLMesh model."""
-    frames = load_frames()
+    frames = load_model_yaml()
     tables = get_table_names(frames)
     
     if not tables:
