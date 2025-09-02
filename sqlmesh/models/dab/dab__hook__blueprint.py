@@ -117,6 +117,11 @@ models_to_generate = filter_frames(models)
         time_column="_record__updated_at",
     ),
     blueprints=models_to_generate,
+    # Partition by valid_from date for efficient temporal queries
+    partitioned_by=["DATE(_record__valid_from)"],
+    # Cluster by current flag for optimal query performance
+    # Note: Primary hook is determined at runtime, so we can't reference it here
+    clustered_by=["_record__is_current", "_record__valid_from"],
 )
 def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     name = evaluator.blueprint_var("name")
