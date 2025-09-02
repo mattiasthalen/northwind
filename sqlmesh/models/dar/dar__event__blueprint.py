@@ -159,8 +159,9 @@ models = load_model_yaml()
     blueprints=models,  # Already filtered to only include models with events
     # Partition by event date and event type for efficient event-based queries
     partitioned_by=["event_occurred_on", "event"],
-    # Cluster by peripheral, event, and current flag for optimal query performance
-    clustered_by=["peripheral", "event", "_record__is_current"],
+    # Cluster by peripheral and current flag for optimal query performance
+    # Note: event is already a partition key, so no need to cluster by it
+    clustered_by=["peripheral", "_record__is_current"],
 )
 def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
     name = evaluator.blueprint_var("name")

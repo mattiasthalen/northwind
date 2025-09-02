@@ -133,9 +133,9 @@ models = load_model_yaml()
     blueprints=models,
     # Partition by valid_from date for efficient temporal queries
     partitioned_by=["DATE(_record__valid_from)"],
-    # Cluster by current flag and valid_from for optimal temporal query performance
-    # Note: peripheral is constant within each bridge table, so not useful for clustering
-    clustered_by=["_record__is_current", "_record__valid_from"],
+    # Cluster by current flag for optimal temporal query performance
+    # Note: valid_from is already partitioned by date, so cluster by other useful columns
+    clustered_by=["_record__is_current"],
 )
 def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     name = evaluator.blueprint_var("name")

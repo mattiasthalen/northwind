@@ -78,9 +78,9 @@ def union_selects(select_expressions: List[exp.Select]) -> exp.Expression:
         time_column="_record__updated_at"
     ),
     partitioned_by=["peripheral", "event_occurred_on"],
-    # Cluster by peripheral and current flag for optimal query performance
-    # Note: Can't cluster by all PIT hooks as there are too many
-    clustered_by=["peripheral", "_record__is_current"]
+    # Cluster by current flag for optimal query performance
+    # Note: peripheral is already a partition key, so no need to cluster by it
+    clustered_by=["_record__is_current"]
 )
 def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
     """The entrypoint function for the SQLMesh model."""
