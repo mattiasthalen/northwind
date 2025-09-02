@@ -5,6 +5,7 @@ from typing import Any, Dict, List
 from sqlglot import exp
 from sqlmesh.core.model import model
 from sqlmesh.core.macros import MacroEvaluator
+from sqlmesh.core.model.kind import ModelKindName
 
 def load_model_yaml() -> List[Dict[str, Any]]:
     """Loads models from a YAML file."""
@@ -70,8 +71,16 @@ def union_selects(select_expressions: List[exp.Select]) -> exp.Expression:
 @model(
     "dar.uss._bridge__as_of",
     enabled=True,
+    cron="@daily",
     is_sql=True,
-    kind="VIEW"
+    kind=dict(
+        name=ModelKindName.INCREMENTAL_BY_TIME_RANGE,
+        time_column="_record__updated_at"
+    ),
+    partitioned_by=["peripheral", "event_occurred_on"],
+    # Cluster by peripheral and current flag for optimal query performance
+    # Note: Can't cluster by all PIT hooks as there are too many
+    clustered_by=["peripheral", "_record__is_current"]
 )
 def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
     """The entrypoint function for the SQLMesh model."""
@@ -88,5 +97,22 @@ def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
         create_select_expression_for_table(evaluator, all_columns, table)
         for table in tables
     ]
-    
-    return union_selects(select_expressions)
+
+    cte__union = union_selects(select_expressions)
+
+    sql = (
+        exp.select("*")
+        .from_("cte__union")
+        .with_("cte__union", as_=cte__union)
+        .where(
+            exp.and_(
+                exp.EQ(this=exp.Literal.number(1), expression=exp.Literal.number(1)),
+                exp.column("_record__updated_at").between(
+                    low=evaluator.locals["start_ts"],
+                    high=evaluator.locals["end_ts"]
+                )
+            )
+        )
+    )
+
+    return sql

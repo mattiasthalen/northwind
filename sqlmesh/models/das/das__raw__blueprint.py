@@ -173,6 +173,10 @@ def build_sql_select(
         disable_restatement=True
     ),
     blueprints=generate_blueprints("northwind"),
+    # Partition by loaded date for efficient incremental loads and time-based queries
+    partitioned_by=["DATE(_record__loaded_at)"],
+    # Cluster by hash for efficient deduplication checks
+    clustered_by=["_record__hash"],
 )
 def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
 

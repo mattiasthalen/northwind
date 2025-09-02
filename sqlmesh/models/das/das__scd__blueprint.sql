@@ -4,6 +4,10 @@ MODEL (
   kind INCREMENTAL_BY_UNIQUE_KEY (
     unique_key _record__hash
   ),
+  -- Partition by valid_from date for efficient temporal queries
+  partitioned_by DATE(_record__valid_from),
+  -- Cluster by unique key and current flag for optimal query performance
+  clustered_by (_record__hash, _record__is_current),
   blueprints (
     (source := northwind__categories, @unique_key := category_id),
     (source := northwind__customers, @unique_key := customer_id),

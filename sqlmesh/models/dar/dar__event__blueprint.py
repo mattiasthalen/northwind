@@ -157,6 +157,10 @@ models = load_model_yaml()
         time_column="_record__updated_at",
     ),
     blueprints=models,  # Already filtered to only include models with events
+    # Partition by event date and event type for efficient event-based queries
+    partitioned_by=["event_occurred_on", "event"],
+    # Cluster by peripheral, event, and current flag for optimal query performance
+    clustered_by=["peripheral", "event", "_record__is_current"],
 )
 def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
     name = evaluator.blueprint_var("name")
