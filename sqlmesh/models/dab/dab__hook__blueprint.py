@@ -104,8 +104,33 @@ def build_cte_primary_hook(primary_hook_expression: Optional[exp.Expression]) ->
     return exp.select(primary_hook_expression, exp.Star()).from_("cte__composite_hooks")
 
 # --- Main Entrypoint ---
-models = load_model_yaml()
-models_to_generate = filter_frames(models)
+def enhance_blueprints_with_primary_hook():
+    """Enhance blueprints with primary hook for clustering."""
+    models = load_model_yaml()
+    models_to_generate = filter_frames(models)
+    
+    # Add primary hook info to each blueprint
+    for model in models_to_generate:
+        # Find primary hook
+        primary_hook = None
+        for hook in model.get("hooks", []):
+            if hook.get("primary", False):
+                primary_hook = hook.get("name")
+                break
+        
+        # If no primary hook in hooks, check composite_hooks
+        if not primary_hook:
+            for hook in model.get("composite_hooks", []) or []:
+                if hook.get("primary", False):
+                    primary_hook = hook.get("name")
+                    break
+        
+        # Store primary hook in blueprint
+        model["primary_hook"] = primary_hook
+    
+    return models_to_generate
+
+models_to_generate = enhance_blueprints_with_primary_hook()
 
 @model(
     "dab.hook.@{name}",
@@ -119,9 +144,9 @@ models_to_generate = filter_frames(models)
     blueprints=models_to_generate,
     # Partition by valid_from date for efficient temporal queries
     partitioned_by=["DATE(_record__valid_from)"],
-    # Cluster by current flag for optimal query performance
-    # Note: valid_from is already partitioned by date, so no need to cluster by it
-    clustered_by=["_record__is_current"],
+    # Cluster by primary hook and temporal columns for HOOK query patterns
+    # Most HOOK queries: JOIN on primary hook + temporal range filtering
+    clustered_by=["@{primary_hook}", "_record__valid_to"],
 )
 def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     name = evaluator.blueprint_var("name")
