@@ -110,6 +110,7 @@ models_to_generate = filter_frames(models)
 @model(
     "dab.hook.@{name}",
     enabled=True,
+    cron="@daily",
     is_sql=True,
     kind=dict(
         name=ModelKindName.INCREMENTAL_BY_TIME_RANGE,

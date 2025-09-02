@@ -150,12 +150,12 @@ models = load_model_yaml()
 @model(
     "dar.uss__staging._event_bridge__@{name}",
     enabled=True,
+    cron="@daily",
     is_sql=True,
     kind=dict(
         name=ModelKindName.INCREMENTAL_BY_TIME_RANGE,
         time_column="_record__updated_at",
     ),
-    cron="*/5 * * * *",  # Run every 5 min, the smallest cron supported by SQLMesh
     blueprints=models,  # Already filtered to only include models with events
 )
 def entrypoint(evaluator: MacroEvaluator) -> exp.Expression:
