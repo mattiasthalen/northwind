@@ -38,13 +38,19 @@ config = Config(
         "local": GatewayConfig(
             connection=DuckDBConnectionConfig(
                 catalogs={
-                    "ducklake": DuckDBAttachOptions(
-                        type="ducklake",
-                        path="data/catalog.ducklake",
-                        data_path="data",
-                        encrypted=True,
-                        data_inlining_row_limit=10,
+                    "ephemeral": ":memory:",
+                    "das": DuckDBAttachOptions(
+                        type="duckdb",
+                        path="./data/das.duckdb",
                     ),
+                    "dab": DuckDBAttachOptions(
+                        type="duckdb",
+                        path="./data/dab.duckdb",
+                    ),
+                    "dar": DuckDBAttachOptions(
+                        type="duckdb",
+                        path="./data/dar.duckdb",
+                    )
                 }
             )
         ),
