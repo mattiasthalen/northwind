@@ -186,7 +186,10 @@ def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
         raise ValueError("Blueprint variable 'name' must be a non-empty string")
 
     schema = evaluator.blueprint_var("schema")
-    source_table = f"landing_zone.{schema}.{name}"
+
+    base_path = os.getenv("DESTINATION__BUCKET_URL")
+    source_table = f"delta_scan('{base_path}/landing_zone/{schema}/{name}')"
+
     target_name = f"{schema}__{name}"
 
     columns = evaluator.blueprint_var("columns")
