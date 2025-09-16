@@ -8,6 +8,10 @@ from sqlmesh.core.macros import MacroEvaluator
 from sqlmesh.core.model.kind import ModelKindName
 from sqlmesh.core import macros
 
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
 # --- Functional helpers for blueprint generation ---
 def _normalize_schemas(schemas: str | list[str]) -> list[str]:
     return [schemas] if isinstance(schemas, str) else schemas
@@ -48,9 +52,11 @@ def build_source_columns(columns: dict | None) -> list[exp.Expression]:
     return [
         exp.cast(
             exp.column(key),
+            # FIXME: This needs to happen only for fabric connections
             # SQLGlot translates JSON to varchar in Fabric, need to set it as varchar(max)
-            exp.DataType.build("varchar(max)") if value["data_type"].lower() == "json" 
-            else exp.DataType.build(value["data_type"])
+            #exp.DataType.build("varchar(max)") if value["data_type"].lower() == "json" 
+            #else exp.DataType.build(value["data_type"])
+            exp.DataType.build(value["data_type"])
         ).as_(key)
         for key, value in columns.items()
     ]
@@ -138,7 +144,8 @@ def build_sql_select(
     sql = (
         exp.select(
             *source_columns,
-            exp.cast(exp.column("_record__hash"), "varbinary(max)").as_("_record__hash"),
+            # FIXME: Fabric requires varbinary(max)
+            exp.cast(exp.column("_record__hash"), "varbinary").as_("_record__hash"),
             exp.cast(exp.column("_record__loaded_at"), "timestamp").as_("_record__loaded_at")
         )
         .from_("cte__deduplicated")
@@ -188,7 +195,7 @@ def entrypoint(evaluator: MacroEvaluator) -> str | exp.Expression:
     schema = evaluator.blueprint_var("schema")
 
     base_path = os.getenv("DESTINATION__BUCKET_URL")
-    source_table = f"delta_scan('{base_path}/landing_zone/{schema}/{name}')"
+    source_table = f"delta_scan('{base_path}/{schema}/{name}')"
 
     target_name = f"{schema}__{name}"
 
