@@ -100,7 +100,7 @@ def load_data_pipeline(source_func, env="dev", add_limit=None, **pipeline_kwargs
     pipeline = dlt.pipeline(**pipeline_config)
 
     # Execute pipeline with Parquet output for compression
-    load_info = pipeline.run(source_func().add_limit(add_limit), loader_file_format="parquet")
+    load_info = pipeline.run(source_func().add_limit(add_limit), table_format="delta", loader_file_format="parquet")
     print(load_info)
 
     return load_info
